@@ -1,17 +1,28 @@
-# agendamento_salas
+# Agendamento de Salas de Coworking
 
-A new Flutter project.
+Aplicação em Flutter com banco SQLite para cadastro de salas e agendamentos, com todas as regras de negócio validadas no próprio banco de dados.
 
-## Getting Started
+## Regras (aplicadas exclusivamente no banco)
 
-This project is a starting point for a Flutter application.
+- Nome da sala obrigatório e único.
+- Todos os campos do agendamento obrigatórios, com relacionamento obrigatório à sala.
+- Data/hora de fim maior que a de início.
+- Sem sobreposição de agendamentos para a mesma sala.
+- Sala com agendamento futuro não pode ser excluída.
+- Toda operação de `INSERT`, `UPDATE` e `DELETE` nas tabelas principais é registrada em `log_operacao`.
 
-A few resources to get you started if this is your first Flutter project:
+As validações são feitas por `constraints` e `triggers` definidas em [database/schema.sql](database/schema.sql).
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Estrutura
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- `database/schema.sql` — script de criação das tabelas e triggers.
+- `lib/models` — modelos de dados.
+- `lib/data` — abertura do banco e repositórios.
+- `lib/screens` — telas de salas, agendamentos e log de operações.
+
+## Como executar
+
+```bash
+flutter pub get
+flutter run -d windows
+```
